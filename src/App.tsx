@@ -19,6 +19,7 @@ const LakePowellInflowTool = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
+        // Fetch from public directory - Vite serves public assets from root
         const response = await fetch('/water_year_metrics.csv');
         
         if (!response.ok) {
@@ -40,7 +41,7 @@ const LakePowellInflowTool = () => {
               swe: baselineData.reduce((sum, d) => sum + d.apr1_swe_mm, 0) / baselineData.length,
               fallSM: baselineData.reduce((sum, d) => sum + d.fall_sm_oct_nov_avg_mm, 0) / baselineData.length,
               springPrecip: baselineData.reduce((sum, d) => sum + d.spring_precip_apr_jul_mm, 0) / baselineData.length,
-              streamflow: baselineData.reduce((sum, d) => sum + d.key_streamflow_apr_jul_mm, 0) / baselineData.length
+              streamflow: baselineData.reduce((sum, d) => sum + d.total_streamflow_mm, 0) / baselineData.length
             };
             
             const processedData = data.map(d => ({
@@ -48,12 +49,11 @@ const LakePowellInflowTool = () => {
               swe_mm: d.apr1_swe_mm,
               fallSM_mm: d.fall_sm_oct_nov_avg_mm,
               springPrecip_mm: d.spring_precip_apr_jul_mm,
-              streamflow_mm: d.key_streamflow_apr_jul_mm,
-              totalStreamflow_mm: d.total_streamflow_mm,
+              streamflow_mm: d.total_streamflow_mm,
               swe_pct: (d.apr1_swe_mm / means.swe) * 100,
               fallSM_pct: (d.fall_sm_oct_nov_avg_mm / means.fallSM) * 100,
               springPrecip_pct: (d.spring_precip_apr_jul_mm / means.springPrecip) * 100,
-              streamflow_pct: (d.key_streamflow_apr_jul_mm / means.streamflow) * 100
+              streamflow_pct: (d.total_streamflow_mm / means.streamflow) * 100
             }));
             
             const ranges = {
@@ -544,7 +544,7 @@ const LakePowellInflowTool = () => {
                       }
                       return ticks;
                     })()}
-                    label={{ value: 'Apr-Jul Streamflow (% of 1991-2020 average)', angle: -90, position: 'insideLeft', style: { fontSize: 14, fontWeight: 600 } }}
+                    label={{ value: 'Annual Streamflow (% of 1991-2020 average)', angle: -90, position: 'insideLeft', style: { fontSize: 14, fontWeight: 600 } }}
                   />
                   <ZAxis dataKey="size" range={[100, 400]} />
                   <Tooltip content={<CustomTooltip />} />
@@ -584,7 +584,7 @@ const LakePowellInflowTool = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Forecasting Model</h3>
               <p className="mb-3">
-                This tool uses a multiple linear regression model to forecast April-July streamflow in the Upper Colorado River Basin 
+                This tool uses a multiple linear regression model to forecast annual streamflow in the Upper Colorado River Basin 
                 based on three key hydrological indicators. The model is trained on 40 years (1985-2024) of VIC (Variable Infiltration Capacity) 
                 model simulations, with all percentages calculated relative to the 1991-2020 baseline period.
               </p>
