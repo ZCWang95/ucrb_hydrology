@@ -36,7 +36,7 @@ const LakePowellInflowTool = () => {
     const loadData = async () => {
       try {
         // FIXED: Added leading slash for Vercel/Production environments
-        const resp = await fetch('/water_year_metrics.csv');
+        const resp = await fetch('water_year_metrics.csv');
         if (!resp.ok) throw new Error(`Could not find water_year_metrics.csv at /public. Status: ${resp.status}`);
         
         const fileContent = await resp.text();
