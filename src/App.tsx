@@ -548,7 +548,7 @@ const LakePowellInflowTool = () => {
                       }
                       return ticks;
                     })()}
-                    label={{ value: 'Annual Streamflow (% of 1991-2020 average)', angle: -90, position: 'insideLeft', style: { fontSize: 14, fontWeight: 600 } }}
+                    label={{ value: 'Annual Streamflow (% of 1991-2020 average)', angle: -90, position: 'insideLeft', offset: 10, style: { fontSize: 14, fontWeight: 600, textAnchor: 'middle' } }}
                   />
                   <ZAxis dataKey="size" range={[100, 400]} />
                   <Tooltip content={<CustomTooltip />} />
