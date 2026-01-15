@@ -32,9 +32,9 @@ const LakePowellInflowTool = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const resp = await fetch('/water_year_metrics.csv');
+        const resp = await fetch('water_year_metrics.csv');
         if (!resp.ok) {
-          throw new Error(`HTTP ${resp.status} fetching /water_year_metrics.csv`);
+          throw new Error(`HTTP ${resp.status} fetching water_year_metrics.csv`);
         }
         const fileContent = await resp.text();
 
