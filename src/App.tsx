@@ -19,7 +19,7 @@ const LakePowellInflowTool = () => {
     const loadData = async () => {
       try {
         // This assumes water_year_metrics.csv is in your 'public' folder or repo root
-        const response = await fetch('./water_year_metrics.csv');
+        const response = await fetch('water_year_metrics.csv');
         if (!response.ok) {
           throw new Error('Data file (water_year_metrics.csv) not found. Ensure it is uploaded to the root of your project.');
         }
