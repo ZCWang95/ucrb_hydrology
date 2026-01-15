@@ -351,8 +351,9 @@ const LakePowellInflowTool = () => {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 bg-white rounded-xl shadow-lg p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          {/* Left Panel: Input Parameters */}
+          <div className="lg:col-span-1 bg-white rounded-xl shadow-lg p-6 h-full">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800">Input Parameters</h2>
               <button
@@ -425,58 +426,61 @@ const LakePowellInflowTool = () => {
               icon={Cloud}
               color="text-cyan-500"
             />
+          </div>
 
-            <div className="mt-8 p-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl text-white">
-              <div className="flex items-center gap-2 mb-3">
+          {/* Right Column: Forecast (Top) and Scatter Plot (Bottom) */}
+          <div className="lg:col-span-2 flex flex-col gap-6 h-full">
+            {/* Forecast Panel (Top) */}
+            <div className="p-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl text-white shadow-lg">
+              <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="w-6 h-6" />
-                <h3 className="text-lg font-semibold">Forecasted Inflow</h3>
+                <h3 className="text-xl font-bold">Forecasted Inflow</h3>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="col-span-2 text-center pb-4 border-b border-white/30">
-                  <div className="text-4xl font-bold mb-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="text-center md:text-left md:border-r md:border-white/30 pr-6">
+                  <div className="text-5xl font-bold mb-1">
                     {Math.round(forecastedFlowPct)}%
                   </div>
-                  <div className="text-sm opacity-90">
+                  <div className="text-lg opacity-90 mb-2">
                     of 1991-2020 average
                   </div>
-                  <div className="text-2xl font-semibold mt-2">
+                  <div className="text-3xl font-semibold">
                     {forecastedFlowMM.toFixed(1)} mm
                   </div>
-                  <div className="text-xs opacity-75">
+                  <div className="text-sm opacity-75 mt-1">
                     Baseline: {means.streamflow.toFixed(1)} mm
                   </div>
                 </div>
                 
-                <div className="col-span-2">
-                  <div className="text-xs font-semibold mb-2 opacity-90">Factor Contributions:</div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="text-center">
-                      <div className={`text-lg font-bold ${sweContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
+                <div>
+                  <div className="text-sm font-semibold mb-3 opacity-90 uppercase tracking-wider">Factor Contributions:</div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center bg-white/10 rounded-lg p-3">
+                      <div className={`text-2xl font-bold ${sweContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
                         {sweContribution >= 0 ? '+' : ''}{sweContribution.toFixed(0)}%
                       </div>
-                      <div className="text-xs opacity-75">SWE</div>
+                      <div className="text-xs font-medium opacity-80 mt-1">SWE</div>
                     </div>
-                    <div className="text-center">
-                      <div className={`text-lg font-bold ${fallContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
+                    <div className="text-center bg-white/10 rounded-lg p-3">
+                      <div className={`text-2xl font-bold ${fallContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
                         {fallContribution >= 0 ? '+' : ''}{fallContribution.toFixed(0)}%
                       </div>
-                      <div className="text-xs opacity-75">Fall SM</div>
+                      <div className="text-xs font-medium opacity-80 mt-1">Fall SM</div>
                     </div>
-                    <div className="text-center">
-                      <div className={`text-lg font-bold ${springContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
+                    <div className="text-center bg-white/10 rounded-lg p-3">
+                      <div className={`text-2xl font-bold ${springContribution >= 0 ? 'text-green-200' : 'text-red-200'}`}>
                         {springContribution >= 0 ? '+' : ''}{springContribution.toFixed(0)}%
                       </div>
-                      <div className="text-xs opacity-75">Spring P</div>
+                      <div className="text-xs font-medium opacity-80 mt-1">Spring P</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            {/* Scatter Plot Panel (Bottom) */}
+            <div className="bg-white rounded-xl shadow-lg p-6 flex-grow">
               <h2 className="text-xl font-bold text-gray-800 mb-4">
                 SWE vs Streamflow Relationship
               </h2>
